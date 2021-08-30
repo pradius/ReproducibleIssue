@@ -1,0 +1,47 @@
+﻿
+
+<div class="d-flex justify-content-between align-items-center w-100" style="height: 50px;
+            background-color: #d7d7d7;"
+     @onclick="(() => OnClick())">
+    <label class="ms-2 fs-5">@Swci.SwcId  @Swci.SwcNAME </label>
+    <img src="img/icons/u121.png" class="me-2 @_arrowRotate" />
+</div>
+
+<div style="@_displayItem">
+
+    @if (IsOpen)
+    {
+        <FirewallRules Swci="@Swci" />
+    }
+</div>
+<hr class="m-0 p-0" />
+
+@code{
+    [Parameter] public SwciModel Swci { get; set; }
+
+    protected bool IsOpen;
+    private string _arrowRotate = "img-rotated";
+    private string _displayItem = "display:none;";
+
+    protected void OnClick()
+    {
+        if (IsOpen)
+        {
+            _arrowRotate = "img-rotated";
+            _displayItem = "display:none;";
+        }
+        else
+        {
+            _displayItem = " ";
+            _arrowRotate = " ";
+        }
+
+        IsOpen = !IsOpen;
+    }
+}
+
+<style>
+    .img-rotated {
+        transform: rotate( 180deg );
+    }
+</style>

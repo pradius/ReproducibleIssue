@@ -1,0 +1,14 @@
+﻿
+<br />
+@foreach (var swci in SwciList)
+{
+    <DropDownComponent Swci="@swci" />
+}
+
+@code{
+
+    [Parameter] public List<SwciModel> SwciList { get; set; }
+
+
+}
+

@@ -1,0 +1,76 @@
+﻿
+@inherits FilterComponentBase
+
+<div class="d-flex border border-1 p-1">
+    <div class="d-flex flex-column border-end border-1 px-2 py-1">
+        <label class="ms-2 text-secondary">Affirmation Status</label>
+        <RadzenDropDown AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Multiple="true" Placeholder="All" TValue="string" Data="@test" />
+    </div>
+    <div class="d-flex flex-column border-end border-1 px-2 py-1">
+        <label class="ms-2 text-secondary">SWCI</label>
+        <RadzenDropDown AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Multiple="true" Placeholder="All" TValue="string" Data="@test" />
+    </div>
+    <div class="d-flex flex-column border-end border-1 px-2 py-1">
+        <label class="ms-2 text-secondary">Label</label>
+        <RadzenDropDown AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Multiple="true" Placeholder="All" TValue="string" Data="@test" />
+    </div>
+    <div class="d-flex flex-column border-end border-1 px-2 py-1">
+        <label class="ms-2 text-secondary">Display Rows</label>
+        <RadzenDropDown AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Multiple="true" Placeholder="All" TValue="string" Data="@test" />
+    </div>
+    <div class="d-flex flex-column px-2 py-1 border-end border-1">
+        <label class="text-secondary">Filters</label>
+        <div class="d-inline" style="width:10vw;">
+            <button class="btn btn-primary btn-align">Apply</button>
+            <button class="btn btn-secondary btn-align">Reset</button>
+        </div>
+    </div>
+    <div class="px-1 py-1">
+        <label class="text-secondary">Manage Labels</label>
+        <div class="d-flex">
+            <div class="d-flex flex-column px-2 py-1">
+                <div class="d-flex align-bottom">
+                    <input type="checkbox" />
+                    <label class="ms-2" style="width:60px">Select All</label>
+                </div>
+            </div>
+            <div class="d-inline" style="width:210px;">
+                <button class="btn btn-primary btn-align" style="width:90px" @onclick="@(() => Modal.Show<AddLabelModal>(""))">Add Label</button>
+                <button class="btn btn-secondary btn-align" style="width:110px">Remove Label</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@switch ("Application")
+{
+    case "Application":
+        <ApplicationView SwciList="@SwciList" />
+        break;
+    case "Label":
+        <CascadingValue Value="@SwciList">
+            @*<LabelView />*@
+        </CascadingValue>
+        break;
+    case "ECI":
+        <CascadingValue Value="@SwciList">
+            @*<EciView />*@
+        </CascadingValue>
+        break;
+
+}
+
+
+<style>
+    .btn-align {
+        padding: 0 !important;
+        width: 4.6vw;
+        margin: 0 auto;
+        display: inline;
+    }
+
+    .blazored-modal-close {
+        padding: 0 !important;
+    }
+</style>

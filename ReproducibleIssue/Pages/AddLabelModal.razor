@@ -1,0 +1,31 @@
+﻿<div class="">
+
+    <label class="fs-5 mb-3">Add Label</label>
+    <br />
+    <input type="text" @bind="@_label" placeholder="Add Label" class="p-3 form-control form-text" />
+    <br />
+    <br />
+    <div class="d-flex my-3 justify-content-center">
+        <button class="btn btn-primary me-3 p-3 px-4" @onclick="@(() => SetLabel())">Save</button>
+        <br />
+        <button class="btn btn-secondary p-3 px-4" @onclick="@(() => ModalInstance.CloseAsync())">Cancel</button>
+    </div>
+</div>
+
+@code{
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    private string _label;
+
+    private void SetLabel()
+    {
+
+    }
+
+}
+
+<style>
+    .blazored-modal-close span {
+        font-size: 20px !important;
+    }
+</style>

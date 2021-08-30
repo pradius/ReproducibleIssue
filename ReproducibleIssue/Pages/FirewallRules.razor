@@ -1,0 +1,136 @@
+﻿
+@inherits FirewallRulesBase
+
+<div class="d-flex justify-content-between align-items-center w-100" style="        height: 40px;
+        background-color: #f5f5f5;"
+     @onclick="(() => OnDropDownClick())">
+    <label class="ms-2 fs-5">Firewall Rules </label>
+    <img src="img/icons/u121.png" class="me-2 @_arrowRotate" />
+</div>
+
+<div style="@_displayItem">
+    @if (rulemanList != null)
+    {
+        <RadzenGrid @ref="grid" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterMode="FilterMode.Simple" AllowPaging="true" PageSize="20"
+                    AllowSorting="true" Data="@rulemanList" TItem="RulemanModel" ColumnWidth="70px" Responsive="false">
+            <Columns>
+                <RadzenGridColumn TItem="RulemanModel" Property="Id" Title="" Width="35px" Filterable="false" Sortable="false">
+                    <HeaderTemplate>
+                        <RadzenCheckBox TriState="false" TValue="bool" class="m-2 checkbox" Value="@(rulemanList.Any(x => selectedRules != null && selectedRules.Contains(x)))"
+                                        Change="@(args => selectedRules = args ? rulemanList.ToList() : null)" />
+                    </HeaderTemplate>
+                    <Template Context="item">
+                        <RadzenCheckBox TriState="false" class="m-2 checkbox" Value="@(selectedRules != null && selectedRules.Contains(item))" />
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="RulemanModel" Property="AffirmStatus" Title="Affirmation Status">
+                    <Template Context="item">
+                        @{
+                            string style = "";
+
+                            switch (item.AffirmStatus)
+                            {
+                                case "Affirmed":
+                                    style = "bg-success";
+                                    break;
+                            }
+                            <label data-bs-toggle="tooltip" data-bs-placement="top" title=@item.AffirmStatus>
+                                <span class="badge @style">@item.AffirmStatus</span>
+                            </label>
+                        }
+                    </Template>
+                    <FooterTemplate>
+                        <label data-bs-toggle="tooltip" data-bs-placement="top" title=@grid.Count>@grid.Count Total Records</label>
+                    </FooterTemplate>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="RulemanModel" Property="Id" Title="Id" Width="35px" />
+                <RadzenGridColumn TItem="RulemanModel" Property="DeviceName" Title="Device Name">
+                    <Template Context="item">
+                        <label data-bs-toggle="tooltip" data-bs-placement="top" title=@item.DeviceName>@item.DeviceName</label>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="RulemanModel" Property="LogicalSystem" Title="Logical System" />
+
+            </Columns>
+        </RadzenGrid>
+
+
+        <br />
+        <div class="d-flex justify-content-end">
+            <div class="d-flex">
+                <button class="btn btn-primary me-4" @onclick="@(() => Modal.Show<AffirmModal>(""))">Affirm </button>
+                <button class="btn btn-secondary me-2">Not Required</button>
+                <button class="btn btn-secondary me-2">Re-assign</button>
+                <button class="btn btn-secondary me-2">Edit SWCI</button>
+                <button class="btn btn-secondary me-2">Request Support</button>
+            </div>
+        </div>
+        <br />
+    }
+</div>
+<hr class="m-0 p-0" />
+
+
+<style>
+    .checkbox {
+        height: 20px;
+        width: 20px;
+    }
+
+    .img-rotated {
+        transform: rotate( 180deg );
+    }
+
+    .rz-datatable-data td .rz-cell-data {
+        font-size: 12px;
+    }
+
+    .rz-datatable-data td {
+        padding: 0 0.2rem !important;
+    }
+
+    .rz-datatable-thead {
+        font-size: 11px;
+        padding: 4px 0;
+    }
+
+        .rz-datatable-thead th {
+            white-space: normal !important;
+        }
+
+            .rz-datatable-thead th .rz-column-title {
+                padding: 0 !important;
+                text-transform: none !important;
+            }
+
+    .rz-paginator-page.rz-state-active {
+        color: #17a2b8;
+    }
+
+    .rz-button.btn-primary {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+
+    .rz-button.btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .rz-cell-filter {
+        padding: .15em 0em;
+    }
+
+    th > div {
+        display: flex;
+        flex-direction: column;
+    }
+
+        th > div > div {
+            display: none;
+        }
+
+    .rz-datatable-thead th {
+        padding: 0 !important;
+    }
+</style>
